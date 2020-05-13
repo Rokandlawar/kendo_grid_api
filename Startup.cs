@@ -14,6 +14,7 @@ namespace kendo_grid_api
 {
     public class Startup
     {
+        readonly string PolicyName = "DEV";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +26,14 @@ namespace kendo_grid_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // Add CORS 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(PolicyName, builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +45,7 @@ namespace kendo_grid_api
             }
 
             app.UseRouting();
+            app.UseCors(PolicyName);
 
             app.UseAuthorization();
 

@@ -18,14 +18,15 @@ namespace kendo_grid_api.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mid", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-[HttpGet]
-        public JsonResult GetProducts([DataSourceRequest]DataSourceRequest request)
+        [HttpGet]
+        public JsonResult GetProducts([DataSourceRequest] DataSourceRequest request)
         {
             // ToDataSourceResult works with IQueryable and thus Entity Framework could be used as a source
             // instead of an in-memory list.
-            using(var dB=new GCNContext()){
+            using (var dB = new GCNContext())
+            {
 
-            return Json(dB.ItemizedStatement.ToDataSourceResult(request));
+                return Json(dB.ItemizedStatement.ToDataSourceResult(request));
             }
         }
     }
